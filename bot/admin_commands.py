@@ -69,7 +69,7 @@ def register_admin_handlers(bot: TeleBot):
                 user_id = message.reply_to_message.from_user.id  # استخراج الـ ID من الرد
             else:
                 raise ValueError("❌ لا يمكن العثور على ID أو Username صالح في الرسالة.")
-            
+
             # إذا كان تم الحصول على الـ ID
             if user_id:
                 # رفع القيود عن المستخدم
