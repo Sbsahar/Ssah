@@ -16,8 +16,8 @@ DEV_USER_ID = 6789179634
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
     markup = InlineKeyboardMarkup()
-    # تعديل رابط الزر ليعمل بشكل صحيح
-    add_button = InlineKeyboardButton("➕ أضفني إلى مجموعتك", url=f"https://t.me/{bot.get_me().username}?startgroup=true")
+    # تأكد من أن رابط الزر يحتوي على اسم المستخدم الصحيح للبوت
+    add_button = InlineKeyboardButton("اضفني إلى مجموعتك", url="https://t.me/your_bot_username?startgroup=true")  # استبدل your_bot_username باسم المستخدم الفعلي للبوت
     channel_button = InlineKeyboardButton("قناة السورس", url="https://t.me/SB_EMPRESS")
     markup.add(add_button, channel_button)
 
@@ -54,9 +54,9 @@ def send_welcome(message):
             "3. <b>أرسل كلمة \"تفعيل\" لتفعيل البوت ✅</b>\n\n"
             "<b>---</b>\n\n"
             "<b>معلومات البوت:</b>\n\n"
-            "<b>♕ معرف البوت: </b>{@bot_username} 🤖\n"
-            "<b>♕ مطورة البوت: </b>{@developer_username} 👩🏻‍💻\n\n"
-            "<b>نتمنـى لك تجربـة آمنة وممتعة مـع بوت كوين المتطور! ✨</b>",
+            "<b>♕ معرف البوت: </b>{@Dfrrttyubot} 🤖\n"
+            "<b>♕ مطورة البوت: </b>{@SB_SAHAR} 👩🏻‍💻\n\n"
+            "<b>نتمنـى لك تجربـة آمنة وممتعة مـع بوت الحماية المتطور! ✨</b>",
             parse_mode="HTML",
             reply_markup=markup
         )
