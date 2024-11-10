@@ -1,5 +1,6 @@
 from telebot import TeleBot
 from telebot.types import Message
+import time
 
 def register_admin_handlers(bot: TeleBot):
     # أمر كتم المستخدم
@@ -68,13 +69,13 @@ def register_admin_handlers(bot: TeleBot):
                 user_id = message.reply_to_message.from_user.id  # استخراج الـ ID من الرد
             else:
                 raise ValueError("❌ لا يمكن العثور على ID أو Username صالح في الرسالة.")
-
+            
             # إذا كان تم الحصول على الـ ID
             if user_id:
                 try:
-                    # تحقق إذا كان الـ ID موجودًا في الدردشة
+                    # تحقق من أن العضو لا يزال موجودًا في الدردشة
                     user = bot.get_chat_member(message.chat.id, user_id)
-                    if user.status != 'left':  # تأكد أن العضو لا يزال في المجموعة
+                    if user.status not in ['left', 'kicked']:  # تأكد أن العضو موجود ولم يترك المجموعة
                         # رفع القيود عن المستخدم
                         bot.restrict_chat_member(
                             message.chat.id,
@@ -94,7 +95,7 @@ def register_admin_handlers(bot: TeleBot):
                 # تحقق من أن الـ Username صحيح
                 try:
                     user = bot.get_chat_member(message.chat.id, username)
-                    if user.status != 'left':  # تأكد أن العضو لا يزال في المجموعة
+                    if user.status not in ['left', 'kicked']:  # تأكد أن العضو موجود ولم يترك المجموعة
                         user_id = user.user.id
                         bot.restrict_chat_member(
                             message.chat.id,
