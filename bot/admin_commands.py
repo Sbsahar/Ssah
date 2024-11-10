@@ -14,8 +14,11 @@ def register_admin_handlers(bot: TeleBot):
                 elif message.text.split()[1].startswith('@'):
                     # التحقق من الـ username
                     username = message.text.split()[1].lstrip('@')
-                    user = bot.get_chat_member(message.chat.id, username)
-                    user_id = user.user.id  # الحصول على الـ ID بناءً على الـ username
+                    try:
+                        user = bot.get_chat_member(message.chat.id, username)
+                        user_id = user.user.id  # الحصول على الـ ID بناءً على الـ username
+                    except:
+                        raise ValueError(f"❌ المستخدم @{username} غير موجود في المجموعة.")
                 else:
                     raise ValueError("لا يمكن العثور على ID أو Username صالح في الرسالة.")
             elif message.reply_to_message:  # إذا كان الرد على رسالة
@@ -47,8 +50,11 @@ def register_admin_handlers(bot: TeleBot):
                 elif message.text.split()[1].startswith('@'):
                     # التحقق من الـ username
                     username = message.text.split()[1].lstrip('@')
-                    user = bot.get_chat_member(message.chat.id, username)
-                    user_id = user.user.id  # الحصول على الـ ID بناءً على الـ username
+                    try:
+                        user = bot.get_chat_member(message.chat.id, username)
+                        user_id = user.user.id  # الحصول على الـ ID بناءً على الـ username
+                    except:
+                        raise ValueError(f"❌ المستخدم @{username} غير موجود في المجموعة.")
                 else:
                     raise ValueError("لا يمكن العثور على ID أو Username صالح في الرسالة.")
             elif message.reply_to_message:  # إذا كان الرد على رسالة
@@ -72,8 +78,11 @@ def register_admin_handlers(bot: TeleBot):
                 elif message.text.split()[1].startswith('@'):
                     # التحقق من الـ username
                     username = message.text.split()[1].lstrip('@')
-                    user = bot.get_chat_member(message.chat.id, username)
-                    user_id = user.user.id  # الحصول على الـ ID بناءً على الـ username
+                    try:
+                        user = bot.get_chat_member(message.chat.id, username)
+                        user_id = user.user.id  # الحصول على الـ ID بناءً على الـ username
+                    except:
+                        raise ValueError(f"❌ المستخدم @{username} غير موجود في المجموعة.")
                 else:
                     raise ValueError("لا يمكن العثور على ID أو Username صالح في الرسالة.")
             elif message.reply_to_message:  # إذا كان الرد على رسالة
@@ -97,8 +106,11 @@ def register_admin_handlers(bot: TeleBot):
                 elif message.text.split()[1].startswith('@'):
                     # التحقق من الـ username
                     username = message.text.split()[1].lstrip('@')
-                    user = bot.get_chat_member(message.chat.id, username)
-                    user_id = user.user.id  # الحصول على الـ ID بناءً على الـ username
+                    try:
+                        user = bot.get_chat_member(message.chat.id, username)
+                        user_id = user.user.id  # الحصول على الـ ID بناءً على الـ username
+                    except:
+                        raise ValueError(f"❌ المستخدم @{username} غير موجود في المجموعة.")
                 else:
                     raise ValueError("لا يمكن العثور على ID أو Username صالح في الرسالة.")
             elif message.reply_to_message:  # إذا كان الرد على رسالة
