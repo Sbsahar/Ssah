@@ -1,6 +1,7 @@
-# admin_commands.py
-
 from telebot import TeleBot
+
+# معرف المطور
+DEV_USER_ID = 123456789  # ضع معرف المطور هنا
 
 # تابع للوظائف الإدارية للبوت
 def register_admin_handlers(bot: TeleBot):
@@ -9,6 +10,9 @@ def register_admin_handlers(bot: TeleBot):
     def ban_user(message):
         try:
             user_id = message.reply_to_message.from_user.id
+            if user_id == DEV_USER_ID:
+                bot.reply_to(message, "❌ لا يمكنني حظر المطور.")
+                return
             bot.ban_chat_member(message.chat.id, user_id)
             bot.reply_to(message, f"🚫 تم حظر المستخدم بنجاح.")
         except Exception as e:
@@ -19,7 +23,13 @@ def register_admin_handlers(bot: TeleBot):
     def mute_user(message):
         try:
             user_id = message.reply_to_message.from_user.id
+            if user_id == DEV_USER_ID:
+                bot.reply_to(message, "❌ لا يمكنني كتم المطور.")
+                return
             bot.restrict_chat_member(message.chat.id, user_id, can_send_messages=False)
+            
+            # مسح رسائل المستخدم بعد كتمه
+            bot.delete_message(message.chat.id, message.reply_to_message.message_id)
             bot.reply_to(message, "🔇 تم كتم المستخدم.")
         except Exception as e:
             bot.reply_to(message, f"❌ حدث خطأ أثناء الكتم: {str(e)}")
@@ -29,6 +39,9 @@ def register_admin_handlers(bot: TeleBot):
     def restrict_user(message):
         try:
             user_id = message.reply_to_message.from_user.id
+            if user_id == DEV_USER_ID:
+                bot.reply_to(message, "❌ لا يمكنني تقيد المطور.")
+                return
             bot.restrict_chat_member(
                 message.chat.id,
                 user_id,
