@@ -48,8 +48,8 @@ def register_admin_handlers(bot: TeleBot):
                         can_send_other_messages=True
                     )
                     bot.reply_to(message, f"🚪 تم رفع جميع القيود عن المستخدم @{username}.")
-                except Exception:
-                    raise ValueError("❌ لا يمكن العثور على المستخدم بهذا الـ Username.")
+                except Exception as e:
+                    raise ValueError(f"❌ لا يمكن العثور على المستخدم بهذا الـ Username. {str(e)}")
             else:
                 raise ValueError("❌ لا يمكن العثور على ID أو Username صالح.")
         except Exception as e:
@@ -80,8 +80,8 @@ def register_admin_handlers(bot: TeleBot):
                     user_id = user.user.id
                     bot.restrict_chat_member(message.chat.id, user_id, can_send_messages=False)
                     bot.reply_to(message, f"🔇 تم كتم المستخدم @{username}.")
-                except Exception:
-                    raise ValueError("❌ لا يمكن العثور على المستخدم بهذا الـ Username.")
+                except Exception as e:
+                    raise ValueError(f"❌ لا يمكن العثور على المستخدم بهذا الـ Username. {str(e)}")
             else:
                 raise ValueError("❌ لا يمكن العثور على ID أو Username صالح.")
         except Exception as e:
@@ -112,8 +112,8 @@ def register_admin_handlers(bot: TeleBot):
                     user_id = user.user.id
                     bot.ban_chat_member(message.chat.id, user_id)
                     bot.reply_to(message, f"🚫 تم حظر المستخدم @{username} بنجاح.")
-                except Exception:
-                    raise ValueError("❌ لا يمكن العثور على المستخدم بهذا الـ Username.")
+                except Exception as e:
+                    raise ValueError(f"❌ لا يمكن العثور على المستخدم بهذا الـ Username. {str(e)}")
             else:
                 raise ValueError("❌ لا يمكن العثور على ID أو Username صالح.")
         except Exception as e:
@@ -156,8 +156,8 @@ def register_admin_handlers(bot: TeleBot):
                         can_send_other_messages=False
                     )
                     bot.reply_to(message, f"🚫 تم تقيد المستخدم @{username} بنجاح.")
-                except Exception:
-                    raise ValueError("❌ لا يمكن العثور على المستخدم بهذا الـ Username.")
+                except Exception as e:
+                    raise ValueError(f"❌ لا يمكن العثور على المستخدم بهذا الـ Username. {str(e)}")
             else:
                 raise ValueError("❌ لا يمكن العثور على ID أو Username صالح.")
         except Exception as e:
