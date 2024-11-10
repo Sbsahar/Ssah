@@ -20,7 +20,7 @@ def register_admin_handlers(bot: TeleBot):
             else:
                 raise ValueError("❌ لا يمكن العثور على ID أو Username صالح في الرسالة.")
             
-            # إذا كان تم الحصول على الـ ID
+            # إذا كان تم الحصول على الـ ID أو الـ Username
             if user_id:
                 # كتم المستخدم
                 bot.restrict_chat_member(
@@ -31,7 +31,6 @@ def register_admin_handlers(bot: TeleBot):
                     can_send_other_messages=False
                 )
                 bot.reply_to(message, f"🔇 تم كتم المستخدم {user_id}.")
-            # إذا كان تم العثور على الـ Username
             elif username:
                 # تحقق من أن الـ Username صحيح
                 try:
