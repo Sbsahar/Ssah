@@ -35,7 +35,7 @@ def update_bot(message):
     try:
         subprocess.run(["git", "pull"], check=True, cwd="https://github.com/Sbsahar/Ssah.git")
         bot.reply_to(message, "🔄 تم جلب التحديثات بنجاح! سيُعاد تشغيل البوت الآن.")
-        os.execv(sys.executable, ['python3 sa'] + sys.argv)
+        os.execv(sys.executable, ['python3 main.py'] + sys.argv)
     except Exception as e:
         bot.reply_to(message, f"❌ حدث خطأ أثناء التحديث: {str(e)}")
 
