@@ -33,9 +33,18 @@ def send_welcome(message):
 @bot.message_handler(func=lambda message: message.text == "تحديث" and message.from_user.id == DEV_USER_ID)
 def update_bot(message):
     try:
-        subprocess.run(["git", "pull"], check=True, cwd="https://github.com/Sbsahar/Ssah.git")
+        # تحديد المسار الصحيح لمجلد البوت في السيرفر
+        repo_directory = "/root/Ssah/bot"  # تأكد من استبداله بالمسار الصحيح للمجلد الذي يحتوي على ملفات البوت
+
+        # جلب التحديثات من Git
+        subprocess.run(["git", "pull", "origin", "main"], check=True, cwd=repo_directory)
+        
+        # إرسال رسالة تأكيد بأن التحديثات تم جلبها بنجاح
         bot.reply_to(message, "🔄 تم جلب التحديثات بنجاح! سيُعاد تشغيل البوت الآن.")
-        os.execv(sys.executable, ['python3 main.py'] + sys.argv)
+        
+        # إعادة تشغيل البوت
+        os.execv(sys.executable, ['python3'] + sys.argv)
+    
     except Exception as e:
         bot.reply_to(message, f"❌ حدث خطأ أثناء التحديث: {str(e)}")
 
