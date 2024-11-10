@@ -7,6 +7,8 @@ def register_admin_handlers(bot: TeleBot):
     @bot.message_handler(func=lambda message: message.text.startswith("رفع القيود"))
     def remove_all_restrictions(message: Message):
         try:
+            user_id = None  # تعريف المتغير user_id
+
             # التحقق إذا كان هناك ID أو username في الرسالة
             if len(message.text.split()) > 1:
                 # إذا كان المستخدم قد أرسل ID
@@ -20,23 +22,25 @@ def register_admin_handlers(bot: TeleBot):
                         user_id = user.user.id  # الحصول على الـ ID بناءً على الـ username
                     except:
                         raise ValueError(f"❌ المستخدم @{username} غير موجود في المجموعة.")
-                else:
-                    raise ValueError("❌ لا يمكن العثور على ID أو Username صالح في الرسالة.")
             elif message.reply_to_message:  # إذا كان الرد على رسالة
                 user_id = message.reply_to_message.from_user.id  # استخراج الـ ID من الرد
             else:
-                raise ValueError("❌ يرجى تحديد ID أو Username أو الرد على رسالة المستخدم.")
+                raise ValueError("❌ لا يمكن العثور على ID أو Username صالح في الرسالة.")
 
-            # رفع القيود
-            bot.unban_chat_member(message.chat.id, user_id)
-            bot.restrict_chat_member(
-                message.chat.id,
-                user_id,
-                can_send_messages=True,
-                can_send_media_messages=True,
-                can_send_other_messages=True
-            )
-            bot.reply_to(message, f"🚪 تم رفع جميع القيود عن المستخدم {user_id}.")
+            if user_id:
+                # رفع القيود
+                bot.unban_chat_member(message.chat.id, user_id)
+                bot.restrict_chat_member(
+                    message.chat.id,
+                    user_id,
+                    can_send_messages=True,
+                    can_send_media_messages=True,
+                    can_send_other_messages=True
+                )
+                bot.reply_to(message, f"🚪 تم رفع جميع القيود عن المستخدم {user_id}.")
+            else:
+                raise ValueError("❌ لم يتم العثور على ID أو Username صالح.")
+
         except Exception as e:
             bot.reply_to(message, f"❌ حدث خطأ أثناء رفع القيود: {str(e)}")
 
@@ -44,6 +48,8 @@ def register_admin_handlers(bot: TeleBot):
     @bot.message_handler(func=lambda message: message.text.startswith("حظر"))
     def ban_user(message: Message):
         try:
+            user_id = None  # تعريف المتغير user_id
+
             # التحقق إذا كان هناك ID أو username في الرسالة
             if len(message.text.split()) > 1:
                 # إذا كان المستخدم قد أرسل ID
@@ -57,15 +63,17 @@ def register_admin_handlers(bot: TeleBot):
                         user_id = user.user.id  # الحصول على الـ ID بناءً على الـ username
                     except:
                         raise ValueError(f"❌ المستخدم @{username} غير موجود في المجموعة.")
-                else:
-                    raise ValueError("❌ لا يمكن العثور على ID أو Username صالح في الرسالة.")
             elif message.reply_to_message:  # إذا كان الرد على رسالة
                 user_id = message.reply_to_message.from_user.id  # استخراج الـ ID من الرد
             else:
-                raise ValueError("❌ يرجى تحديد ID أو Username أو الرد على رسالة المستخدم.")
+                raise ValueError("❌ لا يمكن العثور على ID أو Username صالح في الرسالة.")
 
-            bot.ban_chat_member(message.chat.id, user_id)
-            bot.reply_to(message, f"🚫 تم حظر المستخدم {user_id} بنجاح.")
+            if user_id:
+                bot.ban_chat_member(message.chat.id, user_id)
+                bot.reply_to(message, f"🚫 تم حظر المستخدم {user_id} بنجاح.")
+            else:
+                raise ValueError("❌ لم يتم العثور على ID أو Username صالح.")
+
         except Exception as e:
             bot.reply_to(message, f"❌ حدث خطأ أثناء الحظر: {str(e)}")
 
@@ -73,6 +81,8 @@ def register_admin_handlers(bot: TeleBot):
     @bot.message_handler(func=lambda message: message.text.startswith("كتم"))
     def mute_user(message: Message):
         try:
+            user_id = None  # تعريف المتغير user_id
+
             # التحقق إذا كان هناك ID أو username في الرسالة
             if len(message.text.split()) > 1:
                 # إذا كان المستخدم قد أرسل ID
@@ -86,15 +96,17 @@ def register_admin_handlers(bot: TeleBot):
                         user_id = user.user.id  # الحصول على الـ ID بناءً على الـ username
                     except:
                         raise ValueError(f"❌ المستخدم @{username} غير موجود في المجموعة.")
-                else:
-                    raise ValueError("❌ لا يمكن العثور على ID أو Username صالح في الرسالة.")
             elif message.reply_to_message:  # إذا كان الرد على رسالة
                 user_id = message.reply_to_message.from_user.id  # استخراج الـ ID من الرد
             else:
-                raise ValueError("❌ يرجى تحديد ID أو Username أو الرد على رسالة المستخدم.")
+                raise ValueError("❌ لا يمكن العثور على ID أو Username صالح في الرسالة.")
 
-            bot.restrict_chat_member(message.chat.id, user_id, can_send_messages=False)
-            bot.reply_to(message, f"🔇 تم كتم المستخدم {user_id}.")
+            if user_id:
+                bot.restrict_chat_member(message.chat.id, user_id, can_send_messages=False)
+                bot.reply_to(message, f"🔇 تم كتم المستخدم {user_id}.")
+            else:
+                raise ValueError("❌ لم يتم العثور على ID أو Username صالح.")
+
         except Exception as e:
             bot.reply_to(message, f"❌ حدث خطأ أثناء الكتم: {str(e)}")
 
@@ -102,6 +114,8 @@ def register_admin_handlers(bot: TeleBot):
     @bot.message_handler(func=lambda message: message.text.startswith("تقيد"))
     def restrict_user(message: Message):
         try:
+            user_id = None  # تعريف المتغير user_id
+
             # التحقق إذا كان هناك ID أو username في الرسالة
             if len(message.text.split()) > 1:
                 # إذا كان المستخدم قد أرسل ID
@@ -115,20 +129,22 @@ def register_admin_handlers(bot: TeleBot):
                         user_id = user.user.id  # الحصول على الـ ID بناءً على الـ username
                     except:
                         raise ValueError(f"❌ المستخدم @{username} غير موجود في المجموعة.")
-                else:
-                    raise ValueError("❌ لا يمكن العثور على ID أو Username صالح في الرسالة.")
             elif message.reply_to_message:  # إذا كان الرد على رسالة
                 user_id = message.reply_to_message.from_user.id  # استخراج الـ ID من الرد
             else:
-                raise ValueError("❌ يرجى تحديد ID أو Username أو الرد على رسالة المستخدم.")
+                raise ValueError("❌ لا يمكن العثور على ID أو Username صالح في الرسالة.")
 
-            bot.restrict_chat_member(
-                message.chat.id,
-                user_id,
-                can_send_messages=False,
-                can_send_media_messages=False,
-                can_send_other_messages=False
-            )
-            bot.reply_to(message, f"🚷 تم تقيد المستخدم {user_id}.")
+            if user_id:
+                bot.restrict_chat_member(
+                    message.chat.id,
+                    user_id,
+                    can_send_messages=False,
+                    can_send_media_messages=False,
+                    can_send_other_messages=False
+                )
+                bot.reply_to(message, f"🚷 تم تقيد المستخدم {user_id}.")
+            else:
+                raise ValueError("❌ لم يتم العثور على ID أو Username صالح.")
+
         except Exception as e:
             bot.reply_to(message, f"❌ حدث خطأ أثناء التقييد: {str(e)}")
