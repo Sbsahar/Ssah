@@ -74,15 +74,18 @@ def register_admin_handlers(bot: TeleBot):
                 try:
                     # تحقق إذا كان الـ ID موجودًا في الدردشة
                     user = bot.get_chat_member(message.chat.id, user_id)
-                    # رفع القيود عن المستخدم
-                    bot.restrict_chat_member(
-                        message.chat.id,
-                        user_id,
-                        can_send_messages=True,
-                        can_send_media_messages=True,
-                        can_send_other_messages=True
-                    )
-                    bot.reply_to(message, f"🚪 تم رفع جميع القيود عن المستخدم {user_id}.")
+                    if user.status != 'left':  # تأكد أن العضو لا يزال في المجموعة
+                        # رفع القيود عن المستخدم
+                        bot.restrict_chat_member(
+                            message.chat.id,
+                            user_id,
+                            can_send_messages=True,
+                            can_send_media_messages=True,
+                            can_send_other_messages=True
+                        )
+                        bot.reply_to(message, f"🚪 تم رفع جميع القيود عن المستخدم {user_id}.")
+                    else:
+                        raise ValueError("❌ العضو غير موجود في المجموعة.")
                 except Exception as e:
                     raise ValueError(f"❌ لا يمكن العثور على المستخدم بهذا الـ ID. {str(e)}")
 
@@ -91,15 +94,18 @@ def register_admin_handlers(bot: TeleBot):
                 # تحقق من أن الـ Username صحيح
                 try:
                     user = bot.get_chat_member(message.chat.id, username)
-                    user_id = user.user.id
-                    bot.restrict_chat_member(
-                        message.chat.id,
-                        user_id,
-                        can_send_messages=True,
-                        can_send_media_messages=True,
-                        can_send_other_messages=True
-                    )
-                    bot.reply_to(message, f"🚪 تم رفع جميع القيود عن المستخدم @{username}.")
+                    if user.status != 'left':  # تأكد أن العضو لا يزال في المجموعة
+                        user_id = user.user.id
+                        bot.restrict_chat_member(
+                            message.chat.id,
+                            user_id,
+                            can_send_messages=True,
+                            can_send_media_messages=True,
+                            can_send_other_messages=True
+                        )
+                        bot.reply_to(message, f"🚪 تم رفع جميع القيود عن المستخدم @{username}.")
+                    else:
+                        raise ValueError("❌ العضو غير موجود في المجموعة.")
                 except Exception as e:
                     raise ValueError(f"❌ لا يمكن العثور على المستخدم بهذا الـ Username. {str(e)}")
             else:
