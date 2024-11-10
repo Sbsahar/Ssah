@@ -16,8 +16,8 @@ DEV_USER_ID = 6789179634
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
     markup = InlineKeyboardMarkup()
-    # تأكد من أن رابط الزر يحتوي على اسم المستخدم الصحيح للبوت
-    add_button = InlineKeyboardButton("اضفني إلى مجموعتك", url="https://t.me/your_bot_username?startgroup=true")  # استبدل your_bot_username باسم المستخدم الفعلي للبوت
+    # تعديل رابط الزر ليعمل بشكل صحيح
+    add_button = InlineKeyboardButton("➕ أضفني إلى مجموعتك", url=f"https://t.me/{bot.get_me().username}?startgroup=true")
     channel_button = InlineKeyboardButton("قناة السورس", url="https://t.me/SB_EMPRESS")
     markup.add(add_button, channel_button)
 
