@@ -19,8 +19,8 @@ DEV_USER_ID = 6789179634
 def send_welcome(message):
     markup = InlineKeyboardMarkup()
     
-    # تصحيح زر "أضفني إلى مجموعتك" باستخدام اسم المستخدم للبوت
-    add_button = InlineKeyboardButton("➕ أضفني إلى مجموعتك", url=f"https://t.me/{bot.get_me().username}?startgroup=true")  # استخدام اسم المستخدم للبوت
+    # استخدام اسم المستخدم الفعلي للبوت للحصول على رابط الزر "أضفني إلى مجموعتك"
+    add_button = InlineKeyboardButton("➕ أضفني إلى مجموعتك", url=f"https://t.me/{bot.get_me().username}?startgroup=true")  
     channel_button = InlineKeyboardButton("قناة السورس", url="https://t.me/SB_EMPRESS")
     markup.add(add_button, channel_button)
 
@@ -42,7 +42,7 @@ def send_welcome(message):
                 "<b>---</b>\n\n"
                 "<b>معلومات البوت:</b>\n\n"
                 "<b>♕ معرف البوت: </b>{}</b> 🤖\n".format(bot.get_me().username) +
-                "<b>♕ معرف المطورة: </b>@developer_username 👩🏻‍💻\n\n" +  # استبدال developer_username باسم المستخدم الصحيح للمطور
+                "<b>♕ معرف المطورة: </b>@{}</b> 👩🏻‍💻\n\n".format("developer_username") +  # استبدال "developer_username" باسم المستخدم الفعلي للمطور
                 "<b>نتمنـى لك تجربـة آمنة وممتعة مـع بوت الحماية المتطور! ✨</b>"
             ),
             parse_mode="HTML",
@@ -61,7 +61,7 @@ def send_welcome(message):
             "<b>---</b>\n\n"
             "<b>معلومات البوت:</b>\n\n"
             "<b>♕ معرف البوت: </b>{}</b> 🤖\n".format(bot.get_me().username) +
-            "<b>♕ معرف المطورة: </b>@developer_username 👩🏻‍💻\n\n" +  # استبدال developer_username باسم المستخدم الصحيح للمطور
+            "<b>♕ معرف المطورة: </b>@{}</b> 👩🏻‍💻\n\n".format("developer_username") +  # استبدال "developer_username" باسم المستخدم الفعلي للمطور
             "<b>نتمنـى لك تجربـة آمنة وممتعة مـع بوت الحماية المتطور! ✨</b>",
             parse_mode="HTML",
             reply_markup=markup
