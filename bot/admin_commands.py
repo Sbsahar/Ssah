@@ -72,15 +72,21 @@ def register_admin_handlers(bot: TeleBot):
 
             # إذا كان تم الحصول على الـ ID
             if user_id:
-                # رفع القيود عن المستخدم
-                bot.restrict_chat_member(
-                    message.chat.id,
-                    user_id,
-                    can_send_messages=True,
-                    can_send_media_messages=True,
-                    can_send_other_messages=True
-                )
-                bot.reply_to(message, f"🚪 تم رفع جميع القيود عن المستخدم {user_id}.")
+                try:
+                    # تحقق إذا كان الـ ID موجودًا في الدردشة
+                    user = bot.get_chat_member(message.chat.id, user_id)
+                    # رفع القيود عن المستخدم
+                    bot.restrict_chat_member(
+                        message.chat.id,
+                        user_id,
+                        can_send_messages=True,
+                        can_send_media_messages=True,
+                        can_send_other_messages=True
+                    )
+                    bot.reply_to(message, f"🚪 تم رفع جميع القيود عن المستخدم {user_id}.")
+                except Exception as e:
+                    raise ValueError(f"❌ لا يمكن العثور على المستخدم بهذا الـ ID. {str(e)}")
+
             # إذا كان تم العثور على الـ Username
             elif username:
                 # تحقق من أن الـ Username صحيح
