@@ -1,6 +1,5 @@
 from telebot import TeleBot
 from telebot.types import Message
-import time
 
 def register_admin_handlers(bot: TeleBot):
     # أمر كتم المستخدم
